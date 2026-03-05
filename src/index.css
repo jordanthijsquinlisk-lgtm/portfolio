@@ -1,0 +1,38 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --color-primary: #FFF8EB;
+  --color-text: #004CC1;
+  --color-line: rgba(0, 76, 193, 0.15);
+  --color-bg: #F0D9A8;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Syne', -apple-system, sans-serif;
+}
+
+html, body, #root {
+  min-height: 100vh;
+}
+
+body {
+  background-color: transparent;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

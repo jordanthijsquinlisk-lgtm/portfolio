@@ -188,4 +188,9 @@ h1 em {
   .metric-card__number {
     font-size: 30px !important;
   }
+  /* Menu overlay — round all corners to match card on mobile */
+  .menu-overlay-panel {
+    border-radius: 20px !important;
+    border-left: none !important;
+  }
 }

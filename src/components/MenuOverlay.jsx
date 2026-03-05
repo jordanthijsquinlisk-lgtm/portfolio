@@ -44,6 +44,7 @@ export default function MenuOverlay({ open, onClose }) {
           borderLeft: '1px solid rgba(255,255,255,0.08)',
           borderRadius: '0 40px 40px 0',
         }}
+        className="menu-overlay-panel"
       >
         {/* Header: logo + close button */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

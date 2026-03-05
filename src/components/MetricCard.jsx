@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, canAnimate } from '../animations';
+import { ArrowRight } from './Icons';
 
 export default function MetricCard({ icon, number, title, description, borderRight = true, href }) {
   const [hovered, setHovered] = useState(false);
@@ -40,20 +41,9 @@ export default function MetricCard({ icon, number, title, description, borderRig
         alignItems: 'flex-start',
         marginBottom: 30,
       }}>
-        <svg
-          viewBox="0 0 24 24"
-          style={{
-            width: 32,
-            height: 32,
-            stroke: 'currentColor',
-            strokeWidth: 1.5,
-            fill: 'none',
-            opacity: 0.85,
-            flexShrink: 0,
-          }}
-        >
+        <div style={{ width: 32, height: 32, flexShrink: 0, opacity: 0.85 }}>
           {icon}
-        </svg>
+        </div>
         <span style={{
           fontFamily: 'var(--font-display)',
           fontSize: 40,
@@ -105,9 +95,7 @@ export default function MetricCard({ icon, number, title, description, borderRig
           }}>
             View project
           </span>
-          <svg viewBox="0 0 16 16" style={{ width: 12, height: 12, stroke: 'currentColor', fill: 'none', strokeWidth: 1.5 }}>
-            <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ArrowRight style={{ width: 12, height: 12 }} />
         </div>
       )}
     </>

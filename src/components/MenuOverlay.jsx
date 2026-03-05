@@ -1,3 +1,5 @@
+import { IconClose } from './Icons';
+
 export default function MenuOverlay({ open, onClose }) {
   return (
     <>
@@ -89,9 +91,7 @@ export default function MenuOverlay({ open, onClose }) {
             onMouseEnter={e => e.currentTarget.style.opacity = '1'}
             onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}
           >
-            <svg viewBox="0 0 24 24" style={{ width: 20, height: 20, stroke: 'currentColor', fill: 'none', strokeWidth: 2 }}>
-              <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" />
-            </svg>
+            <IconClose style={{ width: 20, height: 20 }} />
           </button>
         </div>
 
@@ -145,7 +145,7 @@ export default function MenuOverlay({ open, onClose }) {
           fontWeight: 300,
           color: 'white',
         }}>
-          Based in the Netherlands
+          American born, based in the Netherlands
         </p>
       </div>
     </>

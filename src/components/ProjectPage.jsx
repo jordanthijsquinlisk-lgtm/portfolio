@@ -2,6 +2,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, canAnimate } from '../animations';
 import ProjectNav from './ProjectNav';
+import { ArrowLeft, ArrowExternal } from './Icons';
 import '../pages/ResiPage.css';
 
 function MetaRow({ label, value, href }) {
@@ -10,7 +11,11 @@ function MetaRow({ label, value, href }) {
       <span className="meta-label">{label}</span>
       <span className="meta-value">
         {href
-          ? <a href={href} target="_blank" rel="noopener noreferrer">View ↗</a>
+          ? (
+            <a href={href} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+              View <ArrowExternal style={{ width: 11, height: 11 }} />
+            </a>
+          )
           : value
         }
       </span>
@@ -50,9 +55,7 @@ export default function ProjectPage({
       {/* Nav */}
       <header className="resi-nav">
         <Link to="/" className="resi-back">
-          <svg viewBox="0 0 16 16" style={{ width: 14, height: 14, stroke: 'currentColor', fill: 'none', strokeWidth: 1.8 }}>
-            <path d="M10 3L5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ArrowLeft style={{ width: 14, height: 14 }} />
           Back
         </Link>
         <div className="resi-nav__logo">
@@ -119,7 +122,9 @@ export default function ProjectPage({
       {/* Footer */}
       <footer className="resi-footer">
         <span>© 2025 Jordan Quinlisk</span>
-        <Link to="/" className="resi-footer__back">← All projects</Link>
+        <Link to="/" className="resi-footer__back" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <ArrowLeft style={{ width: 12, height: 12 }} /> All projects
+        </Link>
       </footer>
 
     </div>

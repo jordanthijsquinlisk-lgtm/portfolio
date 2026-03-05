@@ -10,6 +10,7 @@ import ResiPage from './pages/ResiPage';
 import PinpointPage from './pages/PinpointPage';
 import StandupPage from './pages/StandupPage';
 import ReimaginePage from './pages/ReimaginePage';
+import { IconResi, IconPinpoint, IconStandup, IconReimagine } from './components/Icons';
 
 const projects = [
   {
@@ -17,52 +18,28 @@ const projects = [
     title: 'Web Design',
     description: 'Marketing websites for apartment properties — built end-to-end in YOOtheme Pro & WordPress.',
     href: '/resi',
-    icon: (
-      <>
-        <rect x="3" y="7" width="11" height="13" rx="1.5" />
-        <rect x="10" y="4" width="11" height="13" rx="1.5" />
-      </>
-    ),
+    icon: <IconResi />,
   },
   {
     number: 'Pinpoint',
     title: 'Product / Tool',
     description: 'Click-to-annotate feedback widget integrating with Teamwork Desk — built and pitched internally.',
     href: '/pinpoint',
-    icon: (
-      <>
-        <line x1="12" y1="2" x2="12" y2="9" strokeLinecap="round" strokeDasharray="2 2" />
-        <line x1="12" y1="15" x2="12" y2="22" strokeLinecap="round" strokeDasharray="2 2" />
-        <line x1="2" y1="12" x2="9" y2="12" strokeLinecap="round" strokeDasharray="2 2" />
-        <line x1="15" y1="12" x2="22" y2="12" strokeLinecap="round" strokeDasharray="2 2" />
-        <circle cx="12" cy="12" r="3" style={{ fill: 'var(--color-primary)' }} stroke="none" />
-      </>
-    ),
+    icon: <IconPinpoint />,
   },
   {
     number: 'Thursday Tea',
     title: 'Internal Tool',
     description: 'Weekly standup board for Resi — departments submit updates, presenter walks through them fullscreen.',
     href: '/standup',
-    icon: (
-      <>
-        <rect x="3" y="4" width="18" height="13" rx="1.5" />
-        <line x1="7" y1="20" x2="17" y2="20" strokeLinecap="round" />
-        <line x1="12" y1="17" x2="12" y2="20" />
-      </>
-    ),
+    icon: <IconStandup />,
   },
   {
     number: 'Reimagine',
     title: 'AI Tool',
     description: 'AI image editor for property photos, deployed to Google Cloud Run inside the Resi AI Toolbox.',
     href: '/reimagine',
-    icon: (
-      <>
-        <circle cx="9" cy="12" r="6" />
-        <circle cx="15" cy="12" r="6" />
-      </>
-    ),
+    icon: <IconReimagine />,
   },
 ];
 
@@ -135,7 +112,7 @@ function HomePage() {
             </div>
             <p className="hero-sub">
               I design marketing websites and digital experiences — and build the AI tools
-              that make them faster to ship. Based in the Netherlands, working at the
+              that make them faster to ship. American born, based in the Netherlands, working at the
               intersection of web design, product thinking, and creative automation.
             </p>
           </section>

@@ -312,12 +312,18 @@
 }
 
 @media (max-width: 640px) {
-  .resi-nav { padding: 20px 24px; }
-  .proj-hero { padding: 32px 24px; }
-  .proj-title { font-size: 56px; }
-  .proj-gallery { columns: 1; padding: 24px; }
-  .proj-body { padding: 28px 24px; }
-  .proj-meta { padding: 0 24px; }
-  .project-nav { padding: 24px; }
-  .resi-footer { padding: 20px 24px; }
+  .resi-container { border-radius: 20px; }
+  .resi-nav { padding: 16px 20px; }
+  .resi-nav__tag { display: none; } /* hides tag on small screens to prevent overflow */
+  .proj-hero { padding: 28px 20px; }
+  .proj-title { font-size: clamp(44px, 13vw, 56px); }
+  .proj-lead { font-size: 15px; }
+  .proj-gallery { columns: 1; padding: 20px; column-gap: 0; }
+  .proj-body { padding: 24px 20px; }
+  .proj-body__text { font-size: 15px; }
+  .proj-meta { padding: 0 20px; }
+  .meta-label { font-size: 18px; }
+  .meta-value { font-size: 13px; max-width: 60%; }
+  .project-nav { padding: 20px; }
+  .resi-footer { padding: 16px 20px; }
 }

@@ -44,7 +44,7 @@ export default function MetricCard({ icon, number, title, description, borderRig
         <div style={{ width: 32, height: 32, flexShrink: 0, opacity: 0.85 }}>
           {icon}
         </div>
-        <span style={{
+        <span className="metric-card__number" style={{
           fontFamily: 'var(--font-display)',
           fontSize: 40,
           fontWeight: 400,
@@ -128,6 +128,7 @@ export default function MetricCard({ icon, number, title, description, borderRig
     return (
       <Link
         to={href}
+        className="metric-card"
         {...handlers}
         style={{ ...sharedStyle, cursor: 'pointer' }}
       >
@@ -138,6 +139,7 @@ export default function MetricCard({ icon, number, title, description, borderRig
 
   return (
     <article
+      className="metric-card"
       {...handlers}
       style={{ ...sharedStyle, cursor: 'default' }}
     >

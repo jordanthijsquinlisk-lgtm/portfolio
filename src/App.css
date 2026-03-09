@@ -52,17 +52,27 @@
   /* Depth colors — leftmost tab is lightest (visually "closest") */
 }
 
-.tabs-strip .portfolio-tab:nth-child(1) { background: #D8E5F2; z-index: 3; }
-.tabs-strip .portfolio-tab:nth-child(2) { background: #BACFE8; z-index: 2; }
-.tabs-strip .portfolio-tab:nth-child(3) { background: #9DBBDD; z-index: 1; }
+.tabs-strip .portfolio-tab:nth-child(1) { z-index: 3; }
+.tabs-strip .portfolio-tab:nth-child(2) { z-index: 2; }
+.tabs-strip .portfolio-tab:nth-child(3) { z-index: 1; }
 
+/* Inactive — uniform muted tone, dimmed label */
+.portfolio-tab:not(.active) {
+  background: rgba(0, 76, 193, 0.12);
+  color: var(--color-text);
+  opacity: 0.5;
+}
+
+/* Active — cream matches the card, full opacity */
 .portfolio-tab.active {
   background: #FFF8EB;
+  opacity: 1;
   z-index: 10;
 }
 
 .portfolio-tab:not(.active):hover {
   transform: translateY(-3px);
+  opacity: 0.75;
 }
 
 /* ── Presentation Card ────────────────────────────────────────────────────── */

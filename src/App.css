@@ -65,7 +65,7 @@
 
 /* Active — cream matches the card, outlined top+sides, open bottom */
 .portfolio-tab.active {
-  background: #FFF8EB;
+  background: var(--color-primary);
   opacity: 1;
   z-index: 10;
   border: 1px solid rgba(0, 76, 193, 0.2);
@@ -73,13 +73,12 @@
 }
 
 .portfolio-tab:not(.active):hover {
-  transform: translateY(-3px);
-  opacity: 0.75;
+  opacity: 0.9;
 }
 
 /* ── Presentation Card ────────────────────────────────────────────────────── */
 .presentation-container {
-  background-color: rgba(255, 248, 235, 0.96);
+  background-color: var(--color-primary);
   width: 100%;
   min-height: 620px;
   border-radius: 40px;
@@ -102,6 +101,11 @@
 
 .tab-panel.active {
   display: flex;
+}
+
+.tab-panel--scrollable {
+  overflow-y: auto;
+  max-height: calc(100vh - 180px);
 }
 
 /* ── About tab ────────────────────────────────────────────────────────────── */

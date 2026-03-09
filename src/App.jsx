@@ -1,9 +1,10 @@
-import { useState, useRef, useLayoutEffect, useCallback } from 'react';
+import { useState, useRef, useLayoutEffect, useCallback, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { gsap, canAnimate } from './animations';
 import './App.css';
 import MetricCard from './components/MetricCard';
 import SplashScreen from './components/SplashScreen';
+import DeckTab from './components/DeckTab';
 import ResiPage from './pages/ResiPage';
 import PinpointPage from './pages/PinpointPage';
 import StandupPage from './pages/StandupPage';
@@ -45,7 +46,10 @@ const TABS = [
   { id: 'about',    label: 'About'    },
   { id: 'projects', label: 'Projects' },
   { id: 'contact',  label: 'Contact'  },
+  { id: 'work',     label: 'Work'     },
 ];
+
+const TAB_INDEX = Object.fromEntries(TABS.map((t, i) => [t.id, i]));
 
 // Module-level flag: persists across route navigations, resets on hard refresh
 let splashShown = false;
@@ -55,6 +59,10 @@ function HomePage() {
   const [splashDone, setSplashDone] = useState(splashShown);
   const [form, setForm]             = useState({ name: '', email: '', message: '' });
   const shellRef                    = useRef(null);
+  const cardRef                     = useRef(null);
+  const directionRef                = useRef(0);
+  const isTransitioning             = useRef(false);
+  const hasTabSwitched              = useRef(false);
 
   // Hide shell before first paint so splash is the only thing visible
   useLayoutEffect(() => {
@@ -81,6 +89,43 @@ function HomePage() {
     setSplashDone(true);
   }, []);
 
+  function handleTabClick(tabId) {
+    if (tabId === activeTab || isTransitioning.current) return;
+    if (!canAnimate()) { setActiveTab(tabId); return; }
+
+    directionRef.current = TAB_INDEX[tabId] > TAB_INDEX[activeTab] ? 1 : -1;
+    isTransitioning.current = true;
+    hasTabSwitched.current = true;
+
+    const currentPanel = cardRef.current?.querySelector('.tab-panel.active');
+    if (!currentPanel) { setActiveTab(tabId); isTransitioning.current = false; return; }
+
+    gsap.to(currentPanel, {
+      opacity: 0,
+      x: -22 * directionRef.current,
+      duration: 0.18,
+      ease: 'power2.in',
+      onComplete: () => {
+        gsap.set(currentPanel, { clearProps: 'opacity,x' });
+        setActiveTab(tabId);
+      },
+    });
+  }
+
+  // Animate new panel in after state update
+  useEffect(() => {
+    if (!hasTabSwitched.current || !canAnimate() || !cardRef.current) return;
+    const panel = cardRef.current.querySelector('.tab-panel.active');
+    if (!panel) return;
+    gsap.fromTo(panel,
+      { opacity: 0, x: 22 * directionRef.current },
+      {
+        opacity: 1, x: 0, duration: 0.28, ease: 'power2.out',
+        onComplete: () => { isTransitioning.current = false; },
+      }
+    );
+  }, [activeTab]);
+
   function handleFormSubmit(e) {
     e.preventDefault();
     const { name, email, message } = form;
@@ -104,7 +149,7 @@ function HomePage() {
               <button
                 key={tab.id}
                 className={`portfolio-tab${activeTab === tab.id ? ' active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabClick(tab.id)}
               >
                 {tab.label}
               </button>
@@ -113,7 +158,7 @@ function HomePage() {
         </div>
 
         {/* ── Card ─────────────────────────────────────────────── */}
-        <div className="presentation-container">
+        <div className="presentation-container" ref={cardRef}>
 
           {/* About ─────────────────────────────────────────────── */}
           <div className={`tab-panel${activeTab === 'about' ? ' active' : ''}`}>
@@ -227,6 +272,11 @@ function HomePage() {
                 </form>
               </div>
             </section>
+          </div>
+
+          {/* Work ──────────────────────────────────────────────── */}
+          <div className={`tab-panel tab-panel--scrollable${activeTab === 'work' ? ' active' : ''}`}>
+            <DeckTab />
           </div>
 
         </div>

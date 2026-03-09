@@ -1,0 +1,354 @@
+/* ── Deck wrapper ─────────────────────────────────────────────────────────── */
+.deck {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ── Shared section base ──────────────────────────────────────────────────── */
+.deck-section {
+  padding: 56px 60px;
+  border-bottom: 1px solid var(--color-line);
+  flex-shrink: 0;
+}
+
+.deck-section:last-child {
+  border-bottom: none;
+}
+
+.deck-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 28px;
+}
+
+.deck-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  margin-bottom: 12px;
+}
+
+.deck-body {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+/* ── Section 1: Who I Am ──────────────────────────────────────────────────── */
+.deck-who__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.deck-who__left {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.deck-who__right {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.deck-values__list,
+.deck-facts__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deck-values__list li,
+.deck-facts__list li {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.deck-fact-marker {
+  opacity: 0.4;
+  margin-right: 8px;
+}
+
+.deck-xp__row {
+  display: flex;
+  gap: 24px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-line);
+  align-items: baseline;
+}
+
+.deck-xp__row:first-of-type {
+  border-top: 1px solid var(--color-line);
+}
+
+.deck-xp__year {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  opacity: 0.45;
+  flex-shrink: 0;
+  width: 110px;
+}
+
+.deck-xp__role {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* ── Sections 2 & 3: Case Studies ────────────────────────────────────────── */
+.deck-case__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  gap: 40px;
+}
+
+.deck-case__title {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-top: 8px;
+}
+
+.deck-case__meta {
+  display: flex;
+  gap: 40px;
+  flex-shrink: 0;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.deck-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deck-meta-value {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.deck-case__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.deck-phase {
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-case__impact {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.deck-impact-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 32px;
+  border-right: 1px solid var(--color-line);
+  padding-left: 0;
+}
+
+.deck-impact-cell:first-child {
+  padding-left: 0;
+}
+
+.deck-impact-cell:last-child {
+  border-right: none;
+  padding-left: 32px;
+  padding-right: 0;
+}
+
+.deck-impact-cell:nth-child(2) {
+  padding-left: 32px;
+}
+
+.deck-impact-value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.3;
+  opacity: 0.85;
+}
+
+/* ── Section 4: Side Project ──────────────────────────────────────────────── */
+.deck-side__callout {
+  border-left: 3px solid rgba(0, 76, 193, 0.25);
+  padding-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.deck-side__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.deck-side__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-side__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.deck-tag {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 100px;
+  opacity: 0.7;
+}
+
+/* ── Section 5: Why Me ────────────────────────────────────────────────────── */
+.deck-why__part {
+  margin-bottom: 48px;
+}
+
+.deck-why__part:last-child {
+  margin-bottom: 0;
+}
+
+/* Skills */
+.deck-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.deck-skill-tag {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 7px 16px;
+  border: 1px solid var(--color-line);
+  border-radius: 100px;
+  opacity: 0.8;
+}
+
+/* Testimonials */
+.deck-testimonials {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.deck-testimonial {
+  padding: 28px 32px;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.deck-testimonial__quote {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.deck-testimonial__attr {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+/* Questions */
+.deck-questions {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.deck-question {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-line);
+  opacity: 0.85;
+}
+
+.deck-questions li:first-child {
+  border-top: 1px solid var(--color-line);
+}
+
+/* ── Responsive — tablet ──────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .deck-section { padding: 40px 32px; }
+  .deck-who__grid { grid-template-columns: 1fr; gap: 36px; }
+  .deck-case__header { flex-direction: column; }
+  .deck-case__meta { flex-wrap: wrap; gap: 24px; }
+  .deck-case__body { grid-template-columns: 1fr; gap: 32px; }
+  .deck-testimonials { grid-template-columns: 1fr; }
+}
+
+/* ── Responsive — mobile ──────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .deck-section { padding: 28px 24px; }
+  .deck-case__impact { grid-template-columns: 1fr; gap: 20px; }
+  .deck-impact-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0 0 16px 0 !important;
+  }
+  .deck-impact-cell:last-child { border-bottom: none; }
+  .deck-case__title { font-size: 28px; }
+  .deck-question { font-size: 18px; }
+}

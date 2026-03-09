@@ -61,7 +61,7 @@ export default function SplashScreen({ onDone, onExit }) {
           background: `
             radial-gradient(ellipse 110% 65% at 5% 105%, #004CC1 0%, rgba(0,76,193,0.65) 22%, rgba(0,76,193,0.18) 48%, transparent 68%),
             radial-gradient(ellipse 65% 45% at 102% -5%, rgba(0,76,193,0.14) 0%, transparent 52%),
-            #FFF8EB
+            #F5E8C8
           `,
         }}
       />

@@ -60,7 +60,7 @@
 .portfolio-tab:not(.active) {
   background: #B8CFEA;
   color: var(--color-text);
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 /* Active — cream matches the card, outlined top+sides, open bottom */
@@ -72,9 +72,7 @@
   border-bottom: none;
 }
 
-.portfolio-tab:not(.active):hover {
-  opacity: 0.9;
-}
+/* Tab hover opacity handled by GSAP in App.jsx */
 
 /* ── Presentation Card ────────────────────────────────────────────────────── */
 .presentation-container {
@@ -120,8 +118,8 @@
   border-right: 1px solid var(--color-line);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 40px;
+  justify-content: flex-start;
+  gap: 0;
 }
 
 .about-right {
@@ -134,7 +132,7 @@
 
 .about-media {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
   gap: 16px;
   align-items: end;
 }
@@ -160,7 +158,7 @@
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
   letter-spacing: 0.05em;
-  opacity: 0.45;
+  opacity: 0.65;
 }
 
 .about-photo {
@@ -372,10 +370,8 @@ h1 em {
   border-radius: 8px;
   cursor: pointer;
   align-self: flex-start;
-  transition: opacity 0.2s ease;
+  /* Hover handled by GSAP in App.jsx */
 }
-
-.contact-submit:hover { opacity: 0.75; }
 
 /* ── Footer ───────────────────────────────────────────────────────────────── */
 .footer-strip {

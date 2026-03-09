@@ -1,6 +1,8 @@
 import { useState, useRef, useLayoutEffect, useCallback, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { gsap, canAnimate } from './animations';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTransition } from './context/TransitionContext';
 import './App.css';
 import MetricCard from './components/MetricCard';
 import SplashScreen from './components/SplashScreen';
@@ -60,6 +62,8 @@ function HomePage() {
   const [form, setForm]             = useState({ name: '', email: '', message: '' });
   const shellRef                    = useRef(null);
   const cardRef                     = useRef(null);
+  const workPanelRef                = useRef(null);
+  const submitRef                   = useRef(null);
   const directionRef                = useRef(0);
   const isTransitioning             = useRef(false);
   const hasTabSwitched              = useRef(false);
@@ -126,6 +130,13 @@ function HomePage() {
     );
   }, [activeTab]);
 
+  // Refresh ScrollTrigger when Work tab first becomes visible
+  useEffect(() => {
+    if (activeTab === 'work') {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
+  }, [activeTab]);
+
   function handleFormSubmit(e) {
     e.preventDefault();
     const { name, email, message } = form;
@@ -133,6 +144,14 @@ function HomePage() {
       `mailto:hello@jordanquinlisk.com` +
       `?subject=${encodeURIComponent(`Portfolio enquiry from ${name}`)}` +
       `&body=${encodeURIComponent(`${message}\n\nFrom: ${email}`)}`;
+  }
+
+  // GSAP hover for inactive tabs
+  function handleTabHover(e, entering) {
+    if (!canAnimate()) return;
+    const tab = e.currentTarget;
+    if (tab.classList.contains('active')) return;
+    gsap.to(tab, { opacity: entering ? 0.75 : 0.5, duration: 0.2, ease: 'power2.out' });
   }
 
   return (
@@ -150,6 +169,8 @@ function HomePage() {
                 key={tab.id}
                 className={`portfolio-tab${activeTab === tab.id ? ' active' : ''}`}
                 onClick={() => handleTabClick(tab.id)}
+                onMouseEnter={(e) => handleTabHover(e, true)}
+                onMouseLeave={(e) => handleTabHover(e, false)}
               >
                 {tab.label}
               </button>
@@ -268,15 +289,28 @@ function HomePage() {
                     onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                     required
                   />
-                  <button type="submit" className="contact-submit">Send message</button>
+                  <button
+                    type="submit"
+                    className="contact-submit"
+                    ref={submitRef}
+                    onMouseEnter={() => canAnimate() && gsap.to(submitRef.current, { opacity: 0.65, scale: 0.98, duration: 0.2, ease: 'power2.out' })}
+                    onMouseLeave={() => canAnimate() && gsap.to(submitRef.current, { opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out' })}
+                    onMouseDown={() => canAnimate() && gsap.to(submitRef.current, { scale: 0.95, duration: 0.1, ease: 'power2.in' })}
+                    onMouseUp={() => canAnimate() && gsap.to(submitRef.current, { scale: 1, duration: 0.4, ease: 'elastic.out(1, 0.5)' })}
+                  >
+                    Send message
+                  </button>
                 </form>
               </div>
             </section>
           </div>
 
           {/* Work ──────────────────────────────────────────────── */}
-          <div className={`tab-panel tab-panel--scrollable${activeTab === 'work' ? ' active' : ''}`}>
-            <DeckTab />
+          <div
+            className={`tab-panel tab-panel--scrollable${activeTab === 'work' ? ' active' : ''}`}
+            ref={workPanelRef}
+          >
+            <DeckTab scrollRef={workPanelRef} />
           </div>
 
         </div>

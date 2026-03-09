@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, canAnimate } from '../animations';
+import { useTransition } from '../context/TransitionContext';
 import { ArrowRight } from './Icons';
 
 export default function MetricCard({ icon, number, title, description, borderRight = true, href }) {
   const [hovered, setHovered] = useState(false);
   const cardRef = useRef(null);
+  const { navigateTo } = useTransition() ?? {};
 
   function handleMouseEnter() {
     setHovered(true);
@@ -131,6 +133,7 @@ export default function MetricCard({ icon, number, title, description, borderRig
         className="metric-card"
         {...handlers}
         style={{ ...sharedStyle, cursor: 'pointer' }}
+        onClick={(e) => { e.preventDefault(); navigateTo?.(href); }}
       >
         {inner}
       </Link>

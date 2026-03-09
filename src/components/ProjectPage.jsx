@@ -1,6 +1,8 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, canAnimate } from '../animations';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTransition } from '../context/TransitionContext';
 import ProjectNav from './ProjectNav';
 import { ArrowLeft, ArrowRight, ArrowExternal } from './Icons';
 import '../pages/ResiPage.css';
@@ -28,14 +30,21 @@ export default function ProjectPage({
   images = [], role, stack, scope,
   links = [], prev, next,
 }) {
-  const containerRef = useRef(null);
+  const containerRef  = useRef(null);
   const scrollBodyRef = useRef(null);
+  const { navigateTo } = useTransition() ?? {};
 
   function scrollBodyTop() {
     scrollBodyRef.current?.scrollTo({ top: 0, behavior: 'instant' });
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
+  function handleBack(e) {
+    e.preventDefault();
+    navigateTo?.('/');
+  }
+
+  // Entrance animation (unchanged)
   useLayoutEffect(() => {
     if (!canAnimate()) return;
 
@@ -43,13 +52,33 @@ export default function ProjectPage({
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       tl.from(containerRef.current, { y: 40, opacity: 0, duration: 0.7 })
-        .from('.resi-nav', { y: -60, opacity: 0, duration: 0.5 }, '-=0.35')
-        .from('.proj-eyebrow', { y: 14, opacity: 0, duration: 0.4 }, '-=0.2')
-        .from('.proj-title', { y: 30, opacity: 0, duration: 0.55 }, '-=0.25')
-        .from('.proj-lead', { y: 16, opacity: 0, duration: 0.45 }, '-=0.3')
-        .from('.gallery-item', { y: 24, opacity: 0, duration: 0.5, stagger: 0.08 }, '-=0.2')
-        .from('.proj-body', { y: 16, opacity: 0, duration: 0.4 }, '-=0.15')
-        .from('.meta-row', { y: 12, opacity: 0, duration: 0.35, stagger: 0.06 }, '-=0.2');
+        .from('.resi-nav',    { y: -60, opacity: 0, duration: 0.5 }, '-=0.35')
+        .from('.proj-eyebrow',{ y: 14,  opacity: 0, duration: 0.4 }, '-=0.2')
+        .from('.proj-title',  { y: 30,  opacity: 0, duration: 0.55 }, '-=0.25')
+        .from('.proj-lead',   { y: 16,  opacity: 0, duration: 0.45 }, '-=0.3')
+        .from('.gallery-item',{ y: 24,  opacity: 0, duration: 0.5, stagger: 0.08 }, '-=0.2')
+        .from('.proj-body',   { y: 16,  opacity: 0, duration: 0.4 }, '-=0.15')
+        .from('.meta-row',    { y: 12,  opacity: 0, duration: 0.35, stagger: 0.06 }, '-=0.2');
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Scroll parallax on hero title (runs after entrance)
+  useEffect(() => {
+    if (!canAnimate()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to('.proj-title', {
+        y: 50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.proj-hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -60,7 +89,7 @@ export default function ProjectPage({
 
       {/* Nav */}
       <header className="resi-nav">
-        <Link to="/" className="resi-back">
+        <Link to="/" className="resi-back" onClick={handleBack}>
           <ArrowLeft style={{ width: 14, height: 14 }} />
           Back
         </Link>
@@ -126,24 +155,28 @@ export default function ProjectPage({
           ))}
         </section>
 
-        {/* Desktop project nav — hidden on mobile */}
+        {/* Desktop project nav */}
         <ProjectNav prev={prev} next={next} />
 
         {/* Footer */}
         <footer className="resi-footer">
           <span>© 2025 Jordan Quinlisk</span>
-          <Link to="/" className="resi-footer__back" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+          <Link to="/" className="resi-footer__back" onClick={handleBack} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
             <ArrowLeft style={{ width: 12, height: 12 }} /> All projects
           </Link>
         </footer>
 
       </div>
 
-      {/* Mobile bottom nav — hidden on desktop */}
+      {/* Mobile bottom nav */}
       {(prev || next) && (
         <nav className="project-nav-mobile">
           {prev ? (
-            <Link to={prev.href} className="proj-nav-mob__link" onClick={scrollBodyTop}>
+            <Link
+              to={prev.href}
+              className="proj-nav-mob__link"
+              onClick={(e) => { e.preventDefault(); scrollBodyTop(); navigateTo?.(prev.href); }}
+            >
               <ArrowLeft style={{ width: 12, height: 12, flexShrink: 0 }} />
               <div className="proj-nav-mob__text">
                 <span className="proj-nav-mob__label">Previous</span>
@@ -152,7 +185,11 @@ export default function ProjectPage({
             </Link>
           ) : <div />}
           {next ? (
-            <Link to={next.href} className="proj-nav-mob__link proj-nav-mob__link--right" onClick={scrollBodyTop}>
+            <Link
+              to={next.href}
+              className="proj-nav-mob__link proj-nav-mob__link--right"
+              onClick={(e) => { e.preventDefault(); scrollBodyTop(); navigateTo?.(next.href); }}
+            >
               <div className="proj-nav-mob__text proj-nav-mob__text--right">
                 <span className="proj-nav-mob__label">Next</span>
                 <span className="proj-nav-mob__title">{next.title}</span>

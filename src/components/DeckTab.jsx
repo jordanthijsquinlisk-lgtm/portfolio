@@ -1,12 +1,47 @@
+import { useRef, useEffect } from 'react';
+import { gsap, canAnimate } from '../animations';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './DeckTab.css';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    All text marked PLACEHOLDER — replace with real content before sharing.
 ───────────────────────────────────────────────────────────────────────────── */
 
-export default function DeckTab() {
+export default function DeckTab({ scrollRef }) {
+  const deckRef = useRef(null);
+
+  // ScrollTrigger section entrances — scroller is the tab panel container
+  useEffect(() => {
+    if (!canAnimate()) return;
+
+    const scroller = scrollRef?.current ?? null;
+    const sections = deckRef.current?.querySelectorAll('.deck-section') ?? [];
+
+    // Set all sections to initial hidden state
+    gsap.set([...sections], { y: 28, opacity: 0 });
+
+    const triggers = [...sections].map((section) =>
+      ScrollTrigger.create({
+        trigger: section,
+        scroller,
+        start: 'top 88%',
+        onEnter: () => {
+          gsap.to(section, {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
+            ease: 'power2.out',
+          });
+        },
+        once: true,
+      })
+    );
+
+    return () => triggers.forEach(t => t.kill());
+  }, [scrollRef]);
+
   return (
-    <div className="deck">
+    <div className="deck" ref={deckRef}>
 
       {/* ── Section 1: Who I Am ─────────────────────────────────────────────── */}
       <section className="deck-section deck-who">
@@ -251,8 +286,8 @@ export default function DeckTab() {
             <blockquote className="deck-testimonial">
               {/* PLACEHOLDER: Real quote */}
               <p className="deck-testimonial__quote">
-                "[Replace with a real quote from a coworker or manager about your work,
-                approach, or impact.]"
+                &ldquo;[Replace with a real quote from a coworker or manager about your work,
+                approach, or impact.]&rdquo;
               </p>
               <footer className="deck-testimonial__attr">
                 — [Name], [Role] at [Company]
@@ -261,8 +296,8 @@ export default function DeckTab() {
             <blockquote className="deck-testimonial">
               {/* PLACEHOLDER: Real quote */}
               <p className="deck-testimonial__quote">
-                "[Replace with a second quote — ideally from someone with a different
-                perspective, e.g. a developer or product manager.]"
+                &ldquo;[Replace with a second quote — ideally from someone with a different
+                perspective, e.g. a developer or product manager.]&rdquo;
               </p>
               <footer className="deck-testimonial__attr">
                 — [Name], [Role] at [Company]

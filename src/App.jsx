@@ -128,15 +128,28 @@ function HomePage() {
                 </h1>
               </div>
               <div className="about-right">
-                <p className="hero-sub">
-                  I design marketing websites and digital experiences — and build the AI tools
-                  that make them faster to ship. American born, based in the Netherlands, working
-                  at the intersection of web design, product thinking, and creative automation.
-                </p>
-                <p className="about-availability">
-                  <span className="availability-dot" />
-                  Available for freelance
-                </p>
+                <div className="about-media">
+                  <div className="about-location-card">
+                    <span className="about-location-city">Eindhoven,<br />Netherlands</span>
+                    <span className="about-location-coords">51.4416° N · 5.4697° E</span>
+                  </div>
+                  <img
+                    src="/images/jordan.png"
+                    alt="Jordan Quinlisk"
+                    className="about-photo"
+                  />
+                </div>
+                <div className="about-right-bottom">
+                  <p className="hero-sub">
+                    I design marketing websites and digital experiences — and build the AI tools
+                    that make them faster to ship. American born, based in the Netherlands, working
+                    at the intersection of web design, product thinking, and creative automation.
+                  </p>
+                  <p className="about-availability">
+                    <span className="availability-dot" />
+                    Available for freelance
+                  </p>
+                </div>
               </div>
             </section>
             <footer className="footer-strip">

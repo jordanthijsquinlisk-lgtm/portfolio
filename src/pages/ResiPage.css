@@ -235,6 +235,9 @@
 }
 .meta-value a:hover { opacity: 0.7; }
 
+/* ── Mobile bottom nav (hidden on desktop) ───────────────────────────────── */
+.project-nav-mobile { display: none; }
+
 /* ── Project Nav ─────────────────────────────────────────────────────────── */
 .project-nav {
   display: flex;
@@ -312,9 +315,69 @@
 }
 
 @media (max-width: 640px) {
-  .resi-container { border-radius: 20px; }
+  /* Full-height card with scrollable interior */
+  .resi-container {
+    border-radius: 20px;
+    height: calc(100dvh - 24px);
+    overflow: hidden;
+  }
+  .proj-scroll-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hide desktop project nav, show mobile bottom nav */
+  .project-nav { display: none; }
+  .project-nav-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-top: 1px solid var(--color-line);
+    background: rgba(255, 248, 235, 0.98);
+    flex-shrink: 0;
+  }
+
+  .proj-nav-mob__link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--color-text);
+    opacity: 0.65;
+    transition: opacity 0.15s ease;
+    max-width: 46%;
+  }
+  .proj-nav-mob__link:hover { opacity: 1; }
+  .proj-nav-mob__link--right { flex-direction: row-reverse; }
+
+  .proj-nav-mob__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .proj-nav-mob__text--right { text-align: right; }
+
+  .proj-nav-mob__label {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+  .proj-nav-mob__title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.2;
+  }
+
+  /* Content spacing */
   .resi-nav { padding: 16px 20px; }
-  .resi-nav__tag { display: none; } /* hides tag on small screens to prevent overflow */
+  .resi-nav__tag { display: none; }
   .proj-hero { padding: 28px 20px; }
   .proj-title { font-size: clamp(44px, 13vw, 56px); }
   .proj-lead { font-size: 15px; }
@@ -324,6 +387,5 @@
   .proj-meta { padding: 0 20px; }
   .meta-label { font-size: 18px; }
   .meta-value { font-size: 13px; max-width: 60%; }
-  .project-nav { padding: 20px; }
   .resi-footer { padding: 16px 20px; }
 }

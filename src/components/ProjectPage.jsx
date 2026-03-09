@@ -2,7 +2,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap, canAnimate } from '../animations';
 import ProjectNav from './ProjectNav';
-import { ArrowLeft, ArrowExternal } from './Icons';
+import { ArrowLeft, ArrowRight, ArrowExternal } from './Icons';
 import '../pages/ResiPage.css';
 
 function MetaRow({ label, value, href }) {
@@ -29,6 +29,12 @@ export default function ProjectPage({
   links = [], prev, next,
 }) {
   const containerRef = useRef(null);
+  const scrollBodyRef = useRef(null);
+
+  function scrollBodyTop() {
+    scrollBodyRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 
   useLayoutEffect(() => {
     if (!canAnimate()) return;
@@ -65,67 +71,97 @@ export default function ProjectPage({
         <div className="resi-nav__tag">{tag}</div>
       </header>
 
-      {/* Hero */}
-      <section className="proj-hero">
-        <p className="proj-eyebrow">{year}</p>
-        <h1 className="proj-title">{title}</h1>
-        <p className="proj-lead">{description}</p>
-      </section>
+      {/* Scrollable content area */}
+      <div className="proj-scroll-body" ref={scrollBodyRef}>
 
-      {/* Gallery */}
-      {images.length > 0 && (
-        <section className="proj-gallery">
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className="gallery-item"
-              style={{ '--gallery-accent': img.accent }}
-            >
-              {img.src ? (
-                <img
-                  src={img.src}
-                  alt={img.label}
-                  style={{ height: img.height || 360, objectPosition: img.position || 'center' }}
-                />
-              ) : (
-                <div className="gallery-item__placeholder" style={{ height: img.height || 360 }} />
-              )}
-              <div className="gallery-overlay">
-                <span className="gallery-label">{img.label}</span>
+        {/* Hero */}
+        <section className="proj-hero">
+          <p className="proj-eyebrow">{year}</p>
+          <h1 className="proj-title">{title}</h1>
+          <p className="proj-lead">{description}</p>
+        </section>
+
+        {/* Gallery */}
+        {images.length > 0 && (
+          <section className="proj-gallery">
+            {images.map((img, i) => (
+              <div
+                key={i}
+                className="gallery-item"
+                style={{ '--gallery-accent': img.accent }}
+              >
+                {img.src ? (
+                  <img
+                    src={img.src}
+                    alt={img.label}
+                    style={{ height: img.height || 360, objectPosition: img.position || 'center' }}
+                  />
+                ) : (
+                  <div className="gallery-item__placeholder" style={{ height: img.height || 360 }} />
+                )}
+                <div className="gallery-overlay">
+                  <span className="gallery-label">{img.label}</span>
+                </div>
               </div>
-            </div>
+            ))}
+          </section>
+        )}
+
+        {/* Body */}
+        {body && (
+          <section className="proj-body">
+            <p className="proj-body__heading">What I built</p>
+            <p className="proj-body__text">{body}</p>
+          </section>
+        )}
+
+        {/* Meta */}
+        <section className="proj-meta">
+          {role  && <MetaRow label="Role"  value={role} />}
+          {stack && <MetaRow label="Stack" value={stack} />}
+          {scope && <MetaRow label="Scope" value={scope} />}
+          {year  && <MetaRow label="Year"  value={year} />}
+          {links.map(link => (
+            <MetaRow key={link.label} label={link.label} href={link.href} />
           ))}
         </section>
+
+        {/* Desktop project nav — hidden on mobile */}
+        <ProjectNav prev={prev} next={next} />
+
+        {/* Footer */}
+        <footer className="resi-footer">
+          <span>© 2025 Jordan Quinlisk</span>
+          <Link to="/" className="resi-footer__back" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <ArrowLeft style={{ width: 12, height: 12 }} /> All projects
+          </Link>
+        </footer>
+
+      </div>
+
+      {/* Mobile bottom nav — hidden on desktop */}
+      {(prev || next) && (
+        <nav className="project-nav-mobile">
+          {prev ? (
+            <Link to={prev.href} className="proj-nav-mob__link" onClick={scrollBodyTop}>
+              <ArrowLeft style={{ width: 12, height: 12, flexShrink: 0 }} />
+              <div className="proj-nav-mob__text">
+                <span className="proj-nav-mob__label">Previous</span>
+                <span className="proj-nav-mob__title">{prev.title}</span>
+              </div>
+            </Link>
+          ) : <div />}
+          {next ? (
+            <Link to={next.href} className="proj-nav-mob__link proj-nav-mob__link--right" onClick={scrollBodyTop}>
+              <div className="proj-nav-mob__text proj-nav-mob__text--right">
+                <span className="proj-nav-mob__label">Next</span>
+                <span className="proj-nav-mob__title">{next.title}</span>
+              </div>
+              <ArrowRight style={{ width: 12, height: 12, flexShrink: 0 }} />
+            </Link>
+          ) : <div />}
+        </nav>
       )}
-
-      {/* Body */}
-      {body && (
-        <section className="proj-body">
-          <p className="proj-body__heading">What I built</p>
-          <p className="proj-body__text">{body}</p>
-        </section>
-      )}
-
-      {/* Meta */}
-      <section className="proj-meta">
-        {role  && <MetaRow label="Role"  value={role} />}
-        {stack && <MetaRow label="Stack" value={stack} />}
-        {scope && <MetaRow label="Scope" value={scope} />}
-        {year  && <MetaRow label="Year"  value={year} />}
-        {links.map(link => (
-          <MetaRow key={link.label} label={link.label} href={link.href} />
-        ))}
-      </section>
-
-      <ProjectNav prev={prev} next={next} />
-
-      {/* Footer */}
-      <footer className="resi-footer">
-        <span>© 2025 Jordan Quinlisk</span>
-        <Link to="/" className="resi-footer__back" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-          <ArrowLeft style={{ width: 12, height: 12 }} /> All projects
-        </Link>
-      </footer>
 
     </div>
   );

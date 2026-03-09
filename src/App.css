@@ -1,10 +1,76 @@
-/* ── Presentation Card ───────────────────────────────────────────────────── */
+/* ── Portfolio Shell ──────────────────────────────────────────────────────── */
+.portfolio-shell {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Tab area ─────────────────────────────────────────────────────────────── */
+.tabs-area {
+  display: flex;
+  align-items: flex-end;
+  padding-left: 8px;
+  position: relative;
+  z-index: 10;
+}
+
+.tabs-brand {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin: 0 14px 10px 4px;
+  opacity: 0.75;
+}
+
+.tabs-strip {
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Individual tab — trapezoid via clip-path */
+.portfolio-tab {
+  height: 44px;
+  min-width: 120px;
+  padding: 0 36px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  clip-path: polygon(12% 0%, 88% 0%, 100% 100%, 0% 100%);
+  margin-right: -12px;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Depth colors — leftmost tab is lightest (visually "closest") */
+}
+
+.tabs-strip .portfolio-tab:nth-child(1) { background: #D8E5F2; z-index: 3; }
+.tabs-strip .portfolio-tab:nth-child(2) { background: #BACFE8; z-index: 2; }
+.tabs-strip .portfolio-tab:nth-child(3) { background: #9DBBDD; z-index: 1; }
+
+.portfolio-tab.active {
+  background: #FFF8EB;
+  z-index: 10;
+}
+
+.portfolio-tab:not(.active):hover {
+  transform: translateY(-3px);
+}
+
+/* ── Presentation Card ────────────────────────────────────────────────────── */
 .presentation-container {
   background-color: rgba(255, 248, 235, 0.96);
   width: 100%;
-  max-width: 1400px;
-  min-height: 800px;
   border-radius: 40px;
+  border-top-left-radius: 0;
   box-shadow:
     0 40px 80px -20px rgba(0, 76, 193, 0.2),
     0 0 0 1px rgba(0, 76, 193, 0.12);
@@ -14,53 +80,39 @@
   position: relative;
 }
 
-/* ── Header ──────────────────────────────────────────────────────────────── */
-.site-header {
+/* ── Tab panels ───────────────────────────────────────────────────────────── */
+.tab-panel {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+
+.tab-panel.active {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 36px 60px;
-  border-bottom: 1px solid var(--color-line);
 }
 
-.logo {
-  font-family: var(--font-body);
-  font-size: 20px;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  letter-spacing: 0.01em;
-  color: var(--color-text);
-}
-
-.logo-img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  flex-shrink: 0;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.logo:hover .logo-img {
-  transform: scale(1.45);
-}
-
-/* ── Main grid ───────────────────────────────────────────────────────────── */
-.main-grid {
-  display: grid;
-  grid-template-columns: 38% 62%;
-  flex-grow: 1;
-}
-
-/* ── Hero Section ────────────────────────────────────────────────────────── */
+/* ── About tab ────────────────────────────────────────────────────────────── */
 .hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+}
+
+.about-left {
   padding: 56px 60px;
   border-right: 1px solid var(--color-line);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 40px;
+}
+
+.about-right {
+  padding: 56px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 32px;
 }
 
 .eyebrow {
@@ -95,13 +147,33 @@ h1 em {
   font-weight: 300;
   line-height: 1.65;
   opacity: 0.8;
-  max-width: 380px;
 }
 
-/* ── Metrics Grid ────────────────────────────────────────────────────────── */
+.about-availability {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.availability-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22C55E;
+  flex-shrink: 0;
+}
+
+/* ── Projects tab ─────────────────────────────────────────────────────────── */
 .metrics-grid {
   display: grid;
   grid-template-rows: 1fr 1fr;
+  flex: 1;
 }
 
 .metric-row {
@@ -114,7 +186,136 @@ h1 em {
   border-bottom: none;
 }
 
-/* ── Footer ──────────────────────────────────────────────────────────────── */
+/* ── Contact tab ──────────────────────────────────────────────────────────── */
+.contact-panel {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  flex: 1;
+}
+
+.contact-left {
+  padding: 56px 60px;
+  border-right: 1px solid var(--color-line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-right {
+  padding: 56px 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-heading {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-top: 12px;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-line);
+  text-decoration: none;
+  color: var(--color-text);
+  gap: 16px;
+  transition: opacity 0.15s ease;
+}
+
+.contact-link:first-child {
+  border-top: 1px solid var(--color-line);
+}
+
+.contact-link:hover { opacity: 0.5; }
+
+.contact-link__label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.contact-link__value {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-style: italic;
+  text-align: right;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+}
+
+.contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.contact-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: transparent;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s ease;
+  resize: none;
+}
+
+.contact-input::placeholder {
+  color: var(--color-text);
+  opacity: 0.35;
+}
+
+.contact-input:focus {
+  border-color: rgba(0, 76, 193, 0.5);
+}
+
+.contact-input--textarea {
+  flex: 1;
+  line-height: 1.6;
+}
+
+.contact-submit {
+  padding: 13px 28px;
+  background: var(--color-text);
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: opacity 0.2s ease;
+}
+
+.contact-submit:hover { opacity: 0.75; }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
 .footer-strip {
   padding: 28px 60px;
   border-top: 1px solid var(--color-line);
@@ -125,53 +326,62 @@ h1 em {
   font-weight: 400;
   opacity: 0.6;
   letter-spacing: 0.01em;
+  flex-shrink: 0;
 }
 
-/* ── Responsive ──────────────────────────────────────────────────────────── */
+/* ── Responsive — tablet ──────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .main-grid {
+  .presentation-container {
+    border-radius: 24px;
+    border-top-left-radius: 0;
+  }
+  h1 { font-size: 48px; }
+  .contact-heading { font-size: 40px; }
+
+  .hero-section,
+  .contact-panel {
     grid-template-columns: 1fr;
   }
-  .hero-section {
+  .about-left {
     border-right: none;
     border-bottom: 1px solid var(--color-line);
   }
-  .presentation-container {
-    border-radius: 24px;
-    min-height: unset;
+  .contact-left {
+    border-right: none;
+    border-bottom: 1px solid var(--color-line);
   }
-  h1 {
-    font-size: 48px;
+  .contact-right {
+    min-height: 400px;
   }
 }
 
+/* ── Responsive — mobile ──────────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  body {
-    padding: 12px;
-  }
+  body { padding: 12px; }
+
   .presentation-container {
     border-radius: 20px;
+    border-top-left-radius: 0;
   }
-  .site-header {
-    padding: 20px 24px;
+
+  /* Tabs */
+  .tabs-area { padding-left: 4px; }
+  .tabs-brand { width: 22px; height: 22px; margin-right: 10px; }
+  .portfolio-tab {
+    height: 36px;
+    min-width: 80px;
+    padding: 0 20px;
+    font-size: 10px;
+    letter-spacing: 0.09em;
   }
-  .hero-section {
-    padding: 32px 24px;
-    gap: 24px;
-  }
-  .hero-sub {
-    max-width: 100%;
-    font-size: 15px;
-  }
-  h1 {
-    font-size: 36px;
-  }
-  .footer-strip {
-    padding: 20px 24px;
-    flex-direction: column;
-    gap: 6px;
-  }
-  /* Metric cards — stack to single column */
+
+  /* About */
+  .about-left { padding: 32px 24px; gap: 24px; }
+  .about-right { padding: 28px 24px; gap: 24px; }
+  h1 { font-size: 36px; }
+  .hero-sub { font-size: 15px; }
+
+  /* Projects */
   .metric-row {
     grid-template-columns: 1fr;
     border-bottom: none;
@@ -185,12 +395,18 @@ h1 em {
   .metric-row--last .metric-card:last-child {
     border-bottom: none !important;
   }
-  .metric-card__number {
-    font-size: 30px !important;
-  }
-  /* Menu overlay — round all corners to match card on mobile */
-  .menu-overlay-panel {
-    border-radius: 20px !important;
-    border-left: none !important;
+  .metric-card__number { font-size: 30px !important; }
+
+  /* Contact */
+  .contact-left { padding: 28px 24px; gap: 20px; }
+  .contact-right { padding: 28px 24px; }
+  .contact-heading { font-size: 32px; }
+  .contact-form__row { grid-template-columns: 1fr; }
+
+  /* Footer */
+  .footer-strip {
+    padding: 20px 24px;
+    flex-direction: column;
+    gap: 6px;
   }
 }
